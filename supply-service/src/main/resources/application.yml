@@ -1,0 +1,28 @@
+service:
+  name: supply-service
+service-registry:
+  host: localhost
+  port: 8090
+
+spring:
+  application:
+    name: supply-service
+server:
+  port: 8091
+management:
+  endpoint:
+    health:
+      show-details: always
+#springdoc:
+#  swagger-ui:
+#    path: /docs
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+
+database:
+  mongodb:
+    connection-string: mongodb://localhost:27017
+    database-name: supplies
