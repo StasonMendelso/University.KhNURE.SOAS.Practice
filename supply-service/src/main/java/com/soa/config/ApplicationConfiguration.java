@@ -17,6 +17,18 @@ public class ApplicationConfiguration {
 
     @Value("${service.name}")
     String serviceName;
+    @Value("${service.protocol}")
+    String protocol;
+    @Value("${service.host}")
+    String host;
+    @Value("${service.health-check-path}")
+    String healthCheckPath;
+    @Value("${server.port:8080}")
+    int port;
+    @Value("${server.servlet.context-path:}")
+    String applicationPath;
+    @Value("${service.version}")
+    String version;
     @Value("${service-registry.host}")
     String registryHost;
     @Value("${service-registry.port}")
@@ -26,21 +38,24 @@ public class ApplicationConfiguration {
     @Value("${database.mongodb.database-name}")
     String mongoDbDatabaseName;
 
+
     @Bean
-    public ExternalServiceHealthIndicator healthIndicator(){
+    public ExternalServiceHealthIndicator healthIndicator() {
         return new ExternalServiceHealthIndicator(serviceName);
-    }
-    @Bean
-    public StartupRegisterServiceListener startupRegisterServiceListener(){
-        return new StartupRegisterServiceListener(serviceName,registryHost,registryPort);
-    }
-    @Bean
-    public ShutdownUnregisterServiceListener shutdownUnregisterServiceListener(){
-        return new ShutdownUnregisterServiceListener(serviceName,registryHost,registryPort);
     }
 
     @Bean
-    public MongoDatabase mongoDatabase(){
+    public StartupRegisterServiceListener startupRegisterServiceListener() {
+        return new StartupRegisterServiceListener(serviceName, protocol, host, port, applicationPath, healthCheckPath, version, registryHost, registryPort);
+    }
+
+    @Bean
+    public ShutdownUnregisterServiceListener shutdownUnregisterServiceListener() {
+        return new ShutdownUnregisterServiceListener(serviceName, registryHost, registryPort, version);
+    }
+
+    @Bean
+    public MongoDatabase mongoDatabase() {
         return MongoClients.create(mongoDbConnectionString).getDatabase(mongoDbDatabaseName);
     }
 }

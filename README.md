@@ -65,7 +65,7 @@ Project has been installed.
 ## Authors
 
 * **Stanislav Hlova** - *All
-  work* - [StasonMendelso](https://github.com/StasonMendelso) [![wakatime](https://wakatime.com/badge/user/b33e0124-90c1-44a9-95a8-0f09b324ad70/project/3444270e-836f-4fcc-931d-77fa4058c9b0.svg)](https://wakatime.com/badge/user/b33e0124-90c1-44a9-95a8-0f09b324ad70/project/3444270e-836f-4fcc-931d-77fa4058c9b0)
+  work* - [StasonMendelso](https://github.com/StasonMendelso) [![wakatime](https://wakatime.com/badge/user/b33e0124-90c1-44a9-95a8-0f09b324ad70/project/5faf2bc1-e1a3-46b2-a4dd-3918237f73ab.svg)](https://wakatime.com/badge/user/b33e0124-90c1-44a9-95a8-0f09b324ad70/project/5faf2bc1-e1a3-46b2-a4dd-3918237f73ab)
 
 [1]:https://nure.ua/
 

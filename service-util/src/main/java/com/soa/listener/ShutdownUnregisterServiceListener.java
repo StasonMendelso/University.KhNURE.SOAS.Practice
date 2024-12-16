@@ -4,6 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextClosedEvent;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
@@ -17,11 +20,13 @@ public class ShutdownUnregisterServiceListener implements ApplicationListener<Co
     private final String serviceName;
     private final String host;
     private final int port;
+    private final String version;
 
-    public ShutdownUnregisterServiceListener(String serviceName, String host, int port) {
+    public ShutdownUnregisterServiceListener(String serviceName, String host, int port, String version) {
         this.serviceName = serviceName;
         this.host = host;
         this.port = port;
+        this.version = version;
     }
 
     @Override
@@ -29,16 +34,22 @@ public class ShutdownUnregisterServiceListener implements ApplicationListener<Co
         LOG.info("Unregistering service '{}' from registry {}:{}", serviceName, host, port);
 
         Map<String, String> payload = new HashMap<>();
-        payload.put("serviceName", serviceName);
+        payload.put("name", serviceName);
+        payload.put("version", version);
 
         RestTemplate restTemplate = new RestTemplate();
-        String url = "http://" + host + ":" + port + "/unregister";
+        String url = "http://" + host + ":" + port + "/api/v1/registry";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<Map<String, String>> request = new HttpEntity<>(payload, headers);
 
         try {
-            String response = restTemplate.postForObject(url, payload, String.class);
-            LOG.info("Unregistered service successfully! Response: {}", response);
+            restTemplate.put(url, request);
+            LOG.info("Unregistered service '{}' successfully!", serviceName);
         } catch (Exception e) {
-            LOG.error("Failed to unregister service: {}", e.getMessage(), e);
+            LOG.error("Failed to unregister service '{}': {}", serviceName, e.getMessage(), e);
         }
     }
 }

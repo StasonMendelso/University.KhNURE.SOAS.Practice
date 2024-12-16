@@ -12,6 +12,7 @@
   <modules>
     <module>supply-service</module>
     <module>service-util</module>
+    <module>registry-service</module>
   </modules>
 
   <properties>

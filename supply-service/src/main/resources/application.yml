@@ -1,5 +1,9 @@
 service:
   name: supply-service
+  version: 1.0.0
+  protocol: http
+  host: localhost
+  health-check-path: /actuator/health
 service-registry:
   host: localhost
   port: 8090
